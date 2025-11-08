@@ -5,20 +5,24 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npx react-snap",
+    "build": "PUPPETEER_EXECUTABLE_PATH=$(which chromium || which google-chrome || echo '') vite build && npx react-snap",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "reactSnap": {
     "source": "dist",
-    "puppeteerArgs": [
-      "--no-sandbox"
-    ],
-    "skipThirdPartyRequests": true,
     "headless": true,
+    "skipThirdPartyRequests": true,
     "minifyHtml": false,
     "inlineCss": false,
     "crawl": true,
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-gpu",
+      "--disable-dev-shm-usage",
+      "--single-process"
+    ],
     "routes": [
       "/",
       "/Earwaxremovalpage",
